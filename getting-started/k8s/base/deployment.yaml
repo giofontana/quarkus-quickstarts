@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: quarkus-getting-started
+  name: quarkus-getting-started
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quarkus-getting-started
+  template:
+    metadata:
+      labels:
+        app: quarkus-getting-started
+    spec:
+      containers:
+        - image: change-me-image
+          imagePullPolicy: Always
+          name: quarkus-getting-started
+          ports:
+            - containerPort: 8080
+              protocol: TCP
