@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: clouds-app-dev
+  name: quarkus-quickstarts-dev
   namespace: openshift-gitops
 spec:
   project: quarkus-getting-started

@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: clouds-api
+  name: quarkus-getting-started
   namespace: openshift-gitops
 spec:
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
-  description: 'ArgoCD Project dedicated for clouds-api application'
+  description: 'ArgoCD Project dedicated for quarkus-getting-started application'
   destinations:
     - namespace: '*'
       server: '*'
