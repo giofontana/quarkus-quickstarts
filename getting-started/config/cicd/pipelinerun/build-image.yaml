@@ -13,7 +13,7 @@ spec:
       value: main
     - name: IMAGE
       value: >-
-        quay-registry-quay-openshift-operators.apps.cluster-gf.gf.sandbox1212.opentlc.com/company/quarkus-getting-started:v1.0
+        quay-registry-quay-openshift-operators.apps.cluster-gf.gf.sandbox1212.opentlc.com/company/quarkus-getting-started:latest
   pipelineRef:
     name: build-image
   serviceAccountName: pipeline
