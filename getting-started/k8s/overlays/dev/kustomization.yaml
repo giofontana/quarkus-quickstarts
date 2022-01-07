@@ -14,5 +14,5 @@ resources:
 
 images:
 - name: change-me-image
-  newName: image-registry.openshift-image-registry.svc:5000/cicd/quarkus-getting-started
+  newName: quay-registry-quay-openshift-operators.apps.cluster-gf.gf.sandbox1212.opentlc.com/company/quarkus-getting-started
   newTag: v1.0

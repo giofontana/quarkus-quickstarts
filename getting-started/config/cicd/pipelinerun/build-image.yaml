@@ -1,0 +1,33 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: build-image
+  namespace: cicd
+  labels:
+    tekton.dev/pipeline: build-image
+spec:
+  params:
+    - name: git-url
+      value: 'https://github.com/giofontana/quarkus-quickstarts.git'
+    - name: git-revision
+      value: main
+    - name: IMAGE
+      value: >-
+        quay-registry-quay-openshift-operators.apps.cluster-gf.gf.sandbox1212.opentlc.com/company/quarkus-getting-started:v1.0
+  pipelineRef:
+    name: build-image
+  serviceAccountName: pipeline
+  workspaces:
+    - name: shared-workspace
+      volumeClaimTemplate:
+        metadata:
+          creationTimestamp: null
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+          storageClassName: gp2
+          volumeMode: Filesystem
+        status: {}

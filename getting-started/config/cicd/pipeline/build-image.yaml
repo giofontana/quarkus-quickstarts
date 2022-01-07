@@ -1,0 +1,55 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-image
+  namespace: cicd
+spec:
+  params:
+    - default: 'https://github.com/giofontana/quarkus-quickstarts.git'
+      description: url of the git repo for the code of deployment
+      name: git-url
+      type: string
+    - default: main
+      description: revision to be used from repo of the code for deployment
+      name: git-revision
+      type: string
+    - default: >-
+        image-registry.openshift-image-registry.svc:5000/cicd/quarkus-getting-started:v1.0
+      description: image to be build from the code
+      name: IMAGE
+      type: string
+  tasks:
+    - name: fetch-repository
+      params:
+        - name: url
+          value: $(params.git-url)
+        - name: deleteExisting
+          value: 'true'
+        - name: revision
+          value: $(params.git-revision)
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+    - name: build-image
+      params:
+        - name: IMAGE
+          value: $(params.IMAGE)
+        - name: CONTEXT
+          value: ./getting-started
+        - name: DOCKERFILE
+          value: ./Dockerfile.multistage
+        - name: TLSVERIFY
+          value: 'false'          
+      runAfter:
+        - fetch-repository
+      taskRef:
+        kind: ClusterTask
+        name: buildah
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+  workspaces:
+    - name: shared-workspace
